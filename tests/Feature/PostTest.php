@@ -54,4 +54,22 @@ class PostTest extends TestCase
           $response->assertStatus(200);
           $response->assertSee($post->title);
       }
+
+       // 未ログインのユーザーは新規投稿ページにアクセスできない
+     public function test_guest_cannot_access_posts_create()
+     {
+         $response = $this->get(route('posts.create'));
+ 
+         $response->assertRedirect(route('login'));
+     }
+ 
+     // ログイン済みのユーザーは新規投稿ページにアクセスできる
+     public function test_user_can_access_posts_create()
+     {
+         $user = User::factory()->create();
+ 
+         $response = $this->actingAs($user)->get(route('posts.create'));
+ 
+         $response->assertStatus(200);
+     }
 }
