@@ -12,7 +12,8 @@ class PostController extends Controller
      // 一覧ページ
      public function index()
      {
-         $posts = Auth::user()->posts()->orderBy('created_at', 'desc')->get();
+        // 更新日時が古い順に取得する
+        $posts = Auth::user()->posts()->orderBy('updated_at', 'asc')->get();
  
          return view('posts.index', compact('posts'));
      }
@@ -32,6 +33,11 @@ class PostController extends Controller
         // 作成機能
         public function store(PostRequest $request)
         {
+            $request->validate([
+                'title' => 'required|string|max:40',
+                'content' => 'required|string|max:200',
+            ]);
+
             $post = new Post();
             $post->title = $request->input('title');
             $post->content = $request->input('content');
@@ -57,6 +63,11 @@ class PostController extends Controller
          if ($post->user_id !== Auth::id()) {
              return redirect()->route('posts.index')->with('error_message', '不正なアクセスです。');
          }
+
+         $request->validate([
+            'title' => 'required|string|max:40',
+            'content' => 'required|string|max:200',
+        ]);
  
          $post->title = $request->input('title');
          $post->content = $request->input('content');

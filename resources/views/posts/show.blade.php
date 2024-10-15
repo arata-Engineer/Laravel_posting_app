@@ -16,6 +16,8 @@
              <div class="card-body">
                  <h2 class="card-title fs-5">{{ $post->title }}</h2>
                  <p class="card-text">{{ $post->content }}</p>
+
+                <p class="text-muted">更新日時: {{ $post->updated_at->format('Y-m-d H:i:s') }}</p>
  
                  @if ($post->user_id === Auth::id())
                      <div class="d-flex">
