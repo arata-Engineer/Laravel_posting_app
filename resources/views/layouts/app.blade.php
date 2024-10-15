@@ -19,23 +19,8 @@
  
  <body>
      <div class="wrapper">
-         <header>
-             <nav class="navbar navbar-light bg-light">
-                 <div class="container">
-                     <a href="{{ route('posts.index') }}" class="navbar-brand">投稿アプリ</a>
- 
-                     <ul class="navbar-nav">
-                         <li class="nav-item">
-                             <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
-                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                                 @csrf
-                             </form>
-                         </li>
-                     </ul>
-                 </div>
-             </nav>
-         </header>
- 
+     @include('layouts.header')
+
          <main>
              <div class="container">
                  <h1 class="fs-2 my-3">@yield('title')</h1>
@@ -43,9 +28,7 @@
              </div>
          </main>
  
-         <footer class="d-flex justify-content-center align-items-center bg-light">
-             <p class="text-muted small mb-0">&copy; 投稿アプリ All rights reserved.</p>
-         </footer>
+         @include('layouts.footer')
      </div>
  
      {{-- Bootstrap --}}
